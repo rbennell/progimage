@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    working_dir: /code
+    environment:
+      - FLASK_APP=progimage.py
+      - FLASK_ENV=development
+      - PYTHONBUFFERED=1
+    command: flask run --host=0.0.0.0
+    expose:
+      - "5000"
+    volumes:
+      - ./src:/code/
+      - ./images:/images/
+    ports:
+      - "5000:5000"
+    tty: true
