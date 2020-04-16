@@ -8,7 +8,7 @@ class BadRequest(Exception):
 
 
 class ProgImageApi:
-    endpoint = "localhost:5000"
+    endpoint = "http://web:5000"
 
     def _build_url(self, path, query_args=None):
         url = self.endpoint + path
@@ -46,4 +46,18 @@ class ProgImageApi:
 
         if not (image_id or url):
             raise BadRequest("Must include an image_id or url when using get_image")
-        return self._get("/get_image", get_image_kwargs)
+        return self._get("/image", get_image_kwargs)
+
+
+if __name__ == "__main__":
+    api = ProgImageApi()
+    resp = api.get_image(
+        url="https://media.wired.com/photos/5cdefc28b2569892c06b2ae4/master/w_2560%2Cc_limit/Culture-Grumpy-Cat-487386121-2.jpg",
+        format="png",
+        thumbnail="200,200",
+        filter="blur",
+        mask="ellipse",
+        rotate="45",
+    )
+    with open("/out/grumpy.png", "wb") as f:
+        f.write(resp.content)

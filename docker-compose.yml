@@ -94,10 +94,11 @@ services:
 
   api:
     build: ./api/.
-    command: echo goodbye
+    command: python api.py
     working_dir: /code
     environment:
       - PYTHONBUFFERED=1
     volumes:
-      - ./mask/src:/code/
+      - ./api/src:/code/
+      - ./api/out:/out/
     tty: true
