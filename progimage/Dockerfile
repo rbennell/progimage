@@ -4,8 +4,10 @@ RUN mkdir /code
 RUN mkdir /images
 WORKDIR /code
 
-COPY src/requirements.txt /code/
+COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 
 COPY /src /code/
 COPY /images /images/
+
+RUN python -m unittest discover

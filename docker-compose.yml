@@ -2,18 +2,102 @@ version: "3"
 
 services:
   web:
-    build: .
+    build: ./progimage/.
     working_dir: /code
     environment:
       - FLASK_APP=progimage.py
       - FLASK_ENV=development
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_RUN_PORT=5000
       - PYTHONBUFFERED=1
-    command: flask run --host=0.0.0.0
+    command: flask run
     expose:
       - "5000"
     volumes:
-      - ./src:/code/
-      - ./images:/images/
+      - ./progimage/src:/code/
+      - ./progimage/images:/images/
     ports:
       - "5000:5000"
+    tty: true
+
+  rotate:
+    build: ./rotate/.
+    working_dir: /code
+    environment:
+      - FLASK_APP=rotate.py
+      - FLASK_ENV=development
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_RUN_PORT=5001
+      - PYTHONBUFFERED=1
+    command: flask run
+    expose:
+      - "5001"
+    volumes:
+      - ./rotate/src:/code/
+    ports:
+      - "5001:5001"
+    tty: true
+
+  thumbnail:
+    build: ./thumbnail/.
+    working_dir: /code
+    environment:
+      - FLASK_APP=thumbnail.py
+      - FLASK_ENV=development
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_RUN_PORT=5002
+      - PYTHONBUFFERED=1
+    command: flask run
+    expose:
+      - "5002"
+    volumes:
+      - ./thumbnail/src:/code/
+    ports:
+      - "5002:5002"
+    tty: true
+
+  filter:
+    build: ./filter/.
+    working_dir: /code
+    environment:
+      - FLASK_APP=filter.py
+      - FLASK_ENV=development
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_RUN_PORT=5003
+      - PYTHONBUFFERED=1
+    command: flask run
+    expose:
+      - "5003"
+    volumes:
+      - ./filter/src:/code/
+    ports:
+      - "5003:5003"
+    tty: true
+
+  mask:
+    build: ./mask/.
+    working_dir: /code
+    environment:
+      - FLASK_APP=mask.py
+      - FLASK_ENV=development
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_RUN_PORT=5004
+      - PYTHONBUFFERED=1
+    command: flask run
+    expose:
+      - "5004"
+    volumes:
+      - ./mask/src:/code/
+    ports:
+      - "5004:5004"
+    tty: true
+
+  api:
+    build: ./api/.
+    command: echo goodbye
+    working_dir: /code
+    environment:
+      - PYTHONBUFFERED=1
+    volumes:
+      - ./mask/src:/code/
     tty: true
